@@ -610,7 +610,7 @@
               var mode = module.get.mode();
               var text = formatter.datetime(date, settings);
               var value = formatter.value(date, settings);
-              if (fireChange && settings.onChange.call(element, date, text, value, mode) === false) {
+              if (fireChange && settings.onChange.call(element, date, text, mode, value) === false) {
                 return false;
               }
 
@@ -1334,7 +1334,7 @@
     },
 
     // callback when date changes, return false to cancel the change
-    onChange: function (date, text, value, mode) {
+    onChange: function (date, text, mode, value) {
       return true;
     },
 
