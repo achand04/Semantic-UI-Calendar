@@ -68,6 +68,9 @@
           module
           ;
 
+        if ($trueInput.length)
+          $input.val(parser.value($trueInput.val(), settings));
+
         module = {
 
           initialize: function () {
@@ -1324,6 +1327,9 @@
           date = new Date(year, month, 0, hour, minute);
         }
         return isNaN(date.getTime()) ? null : date;
+      },
+      value: function (text, settings) {
+        return new Date(text);
       }
     },
 
