@@ -1361,9 +1361,9 @@
 
     selector: {
       popup: '.ui.popup',
-      input: 'input[type=text]',
+      input: 'input:not([type=hidden])',
       trueInput: 'input[type=hidden]',
-      activator: 'input[type=text]'
+      activator: 'input:not([type=hidden])'
     },
 
     regExp: {
