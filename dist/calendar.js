@@ -54,6 +54,7 @@
           moduleNamespace = 'module-' + namespace,
 
           $module = $(this),
+          $trueInput = $module.find(selector.trueInput),
           $input = $module.find(selector.input),
           $container = $module.find(selector.popup),
           $activator = $module.find(selector.activator),
@@ -515,7 +516,9 @@
               if (settings.formatInput) {
                 var date = module.get.date();
                 var text = formatter.datetime(date, settings);
+                var value = formatter.value(date, settings);
                 $input.val(text);
+                $trueInput.val(value);
               }
             },
             inputClick: function () {
@@ -603,7 +606,8 @@
 
               var mode = module.get.mode();
               var text = formatter.datetime(date, settings);
-              if (fireChange && settings.onChange.call(element, date, text, mode) === false) {
+              var value = formatter.value(date, settings);
+              if (fireChange && settings.onChange.call(element, date, text, value, mode) === false) {
                 return false;
               }
 
@@ -622,6 +626,7 @@
 
               if (updateInput && $input.length) {
                 $input.val(text);
+                $trueInput.val(value);
               }
             },
             startDate: function (date, refreshCalendar) {
@@ -1117,6 +1122,9 @@
         return settings.type === 'date' ? settings.text.today : settings.text.now;
       },
       cell: function (cell, date, cellOptions) {
+      },
+      value: function (date, settings) {
+        return date ? date.toISOString() : '';
       }
     },
 
@@ -1320,7 +1328,7 @@
     },
 
     // callback when date changes, return false to cancel the change
-    onChange: function (date, text, mode) {
+    onChange: function (date, text, value, mode) {
       return true;
     },
 
@@ -1347,8 +1355,9 @@
 
     selector: {
       popup: '.ui.popup',
-      input: 'input',
-      activator: 'input'
+      input: 'input[type=text]',
+      trueInput: 'input[type=hidden]',
+      activator: 'input[type=text]'
     },
 
     regExp: {
